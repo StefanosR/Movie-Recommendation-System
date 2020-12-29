@@ -3,6 +3,11 @@ import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 
+# the next 2 lines (temporary), change the working directory while executing the file, so that VS Code understands csv file names 
+# without needing the full path of the datasets.. Reminder to fix this issue internally (or include full paths) and delete this code 
+
+import os
+os.chdir(r'C:\Users\Stefanos\OneDrive\Υπολογιστής\Fast Projects\Decision Theory\Decision-Theory')
 
 # read data with panda, only the columns that are needed
 
@@ -11,7 +16,6 @@ ratings = pd.read_csv('ratings.csv', sep=';', names=r_cols, usecols=[1, 2, 3], e
 
 m_cols = ['movie_id', 'title']
 movies = pd.read_csv('movies.csv', sep='\t', names=m_cols, usecols=[1, 2], encoding="ISO-8859-1", low_memory=False, header=0)
-
 
 # create m*n matrix where m is the number of the users and n the number of the movies,
 # each cell contains the rating of user i for the movie j
@@ -29,7 +33,6 @@ features = csr_matrix(matrix.values)
 knnModel = NearestNeighbors(metric="cosine", algorithm="brute", n_neighbors=10)
 knnModel.fit(features)
 
-
 # get the 10 nearest neighbors of user
 
 distances, indexes = knnModel.kneighbors([matrix.loc[1, :]])
@@ -45,19 +48,8 @@ for i in range(1, len(moviesRec)):
         if matrix.loc[1, i] != 0:
             moviesRec[i] = 0
     except KeyError:
-        print('')
+        pass
 
-print('You should also watch', movies[['title']].loc[movies['movie_id'] == moviesRec.idxmax()])
+# note to fix the output format
 
-
-
-
-
-
-
-
-
-
-
-
-
+print('You should also watch:\n', movies[['title']].loc[movies['movie_id'] == moviesRec.idxmax()])
