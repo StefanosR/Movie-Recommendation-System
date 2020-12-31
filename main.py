@@ -6,8 +6,8 @@ from sklearn.neighbors import NearestNeighbors
 # the next 2 lines (temporary), change the working directory while executing the file, so that VS Code understands csv file names 
 # without needing the full path of the datasets.. Reminder to fix this issue internally (or include full paths) and delete this code 
 
-import os
-os.chdir(r'C:\Users\Stefanos\OneDrive\Υπολογιστής\Fast Projects\Decision Theory\Decision-Theory')
+# import os
+# os.chdir(r'C:\Users\Stefanos\OneDrive\Υπολογιστής\Fast Projects\Decision Theory\Decision-Theory')
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------
 
