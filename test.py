@@ -2,7 +2,8 @@ import pandas as pd
 import json
 from datetime import datetime 
 import time
-
+from scipy import spatialdef
+from scipy.sparse import csr_matrix
 
 ##vazoyme to excel me tis vathmologies
 ratings = pd.read_csv('ratings.csv',sep=';',index_col=[0])
@@ -21,6 +22,8 @@ merged = pd.merge(test,users_info, on = 'user_id') #enonoyme ton pinaka me ratin
 #vazoume to eidos( h eidh ) kathe tenias se enan pinaka kai ta xorizoyme me ,
 merged['genres'] = merged['genres'].str.strip('[]').str.replace(' ','').str.replace("'",'')
 merged['genres'] = merged['genres'].str.split('|')
+merged['age_desc'] = merged['age_desc'].str.strip('[]').str.replace(' ','').str.replace("'",'')
+merged['age_desc'] = merged['age_desc'].str.split(' ')
 
 
 #timestamp se hmerominia
@@ -43,7 +46,7 @@ def binary(gendre_List):
     
     return binaryList
 merged['gender_bin'] = merged['gender'].apply(lambda x: binary(x))
-
+##################################################################################################
 #ftiaxnoyme mia lista me ta monadika eidh tenion
 genreList = []
 for index, row in merged.iterrows():
@@ -53,9 +56,9 @@ for index, row in merged.iterrows():
         if genre not in genreList:
             genreList.append(genre)
 genreList[:10] #now we have a list with unique genres
-#print(genreList)
 
 
+#vazoume ton arithmo 1 otan to genre mias tenias einai idio me thn lista apo to unique genres poy ftiaksame prin kai 0 sta ipolipa
 def binary(genre_list):
     binaryList = []
     
@@ -67,10 +70,52 @@ def binary(genre_list):
     
     return binaryList
 merged['genres_bin'] = merged['genres'].apply(lambda x: binary(x))
-print(merged['genres_bin'].head())
+#print(merged['genres_bin'].head())
+###################################################################################################
+#ftiaxnoyme mia lista me ta monadika eidh age_desc
+ageList = []
+for index, row in merged.iterrows():
+    ages = row["age_desc"]
+    
+    for age in ages:
+        if age not in ageList:
+            ageList.append(age)
+ageList[:10] #now we have a list with unique ages_desc
 
 
+def binary(ageList):
+    binaryList = []
+    
+    for age in ageList:
+        if age in ageList:
+            binaryList.append(1)
+        else:
+            binaryList.append(0)
+    
+    return binaryList
+merged['ages_bin'] = merged['age_desc'].apply(lambda x: binary(x))
 
+
+def Similarity(movieId1, movieId2):
+    a = merged.iloc[movieId1]
+    b = merged.iloc[movieId2]
+    
+    genresA = a['genres_bin']
+    genresB = b['genres_bin']
+    
+    genreDistance = spatial.distance.cosine(genresA, genresB)
+    
+    scoreA = a['gender_bin']
+    scoreB = b['gender_bin']
+    scoreDistance = spatial.distance.cosine(scoreA, scoreB)
+    
+    directA = a['ages_bin']
+    directB = b['ages_bin']
+    directDistance = spatial.distance.cosine(directA, directB)
+    
+    return genreDistance + directDistance + scoreDistance 
+
+Similarity(3,160)
 
 
 
