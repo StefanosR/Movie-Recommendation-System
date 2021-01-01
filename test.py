@@ -27,9 +27,10 @@ merged['genres'] = merged['genres'].str.split('|')
 merged['timestamp'] = [time.strftime(' %d-%m-%Y', time.localtime(x)) for x in merged['timestamp']]
 
 
-print(merged.tail())
+print(merged.head())
 gendreList = ['M','F'] #lista me ta 2 fila 
-print(gendreList)
+
+
 #sinartisi metatropis ton filon apo M k F se 0 kai 1 (male = 0 female = 1)
 def binary(gendre_List):
     binaryList = []
@@ -42,7 +43,31 @@ def binary(gendre_List):
     
     return binaryList
 merged['gender_bin'] = merged['gender'].apply(lambda x: binary(x))
-print(merged['gender_bin'].head())
+
+#ftiaxnoyme mia lista me ta monadika eidh tenion
+genreList = []
+for index, row in merged.iterrows():
+    genres = row["genres"]
+    
+    for genre in genres:
+        if genre not in genreList:
+            genreList.append(genre)
+genreList[:10] #now we have a list with unique genres
+#print(genreList)
+
+
+def binary(genre_list):
+    binaryList = []
+    
+    for genre in genreList:
+        if genre in genre_list:
+            binaryList.append(1)
+        else:
+            binaryList.append(0)
+    
+    return binaryList
+merged['genres_bin'] = merged['genres'].apply(lambda x: binary(x))
+print(merged['genres_bin'].head())
 
 
 
