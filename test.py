@@ -2,8 +2,11 @@ import pandas as pd
 import json
 from datetime import datetime 
 import time
-from scipy import spatialdef
+from scipy import spatial
 from scipy.sparse import csr_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
 
 ##vazoyme to excel me tis vathmologies
 ratings = pd.read_csv('ratings.csv',sep=';',index_col=[0])
@@ -115,19 +118,10 @@ def Similarity(movieId1, movieId2):
     
     return genreDistance + directDistance + scoreDistance 
 
-Similarity(3,160)
-
-
-
-
-
-
-
+print(Similarity(3,160))
 
 ##grafikes parastaseis
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
+#grafiki parastash Top Eidh tenion
 plt.subplots(figsize=(12,10))
 list1 = []
 for i in merged['genres']:
