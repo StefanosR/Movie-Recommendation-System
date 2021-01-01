@@ -7,6 +7,8 @@ from scipy.sparse import csr_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from sklearn.neighbors import NearestNeighbors
+import operator
 
 ##vazoyme to excel me tis vathmologies
 ratings = pd.read_csv('ratings.csv',sep=';',index_col=[0])
@@ -32,7 +34,7 @@ merged['age_desc'] = merged['age_desc'].str.split(' ')
 #timestamp se hmerominia
 merged['timestamp'] = [time.strftime(' %d-%m-%Y', time.localtime(x)) for x in merged['timestamp']]
 
-
+#merged['gender'] = merged['gender'].map({'F': 1, 'M': 0})
 print(merged.head())
 gendreList = ['M','F'] #lista me ta 2 fila 
 
@@ -73,7 +75,7 @@ def binary(genre_list):
     
     return binaryList
 merged['genres_bin'] = merged['genres'].apply(lambda x: binary(x))
-#print(merged['genres_bin'].head())
+
 ###################################################################################################
 #ftiaxnoyme mia lista me ta monadika eidh age_desc
 ageList = []
@@ -100,6 +102,7 @@ merged['ages_bin'] = merged['age_desc'].apply(lambda x: binary(x))
 
 
 def Similarity(movieId1, movieId2):
+    
     a = merged.iloc[movieId1]
     b = merged.iloc[movieId2]
     
@@ -120,6 +123,40 @@ def Similarity(movieId1, movieId2):
 
 print(Similarity(3,160))
 
+
+def predict_score():
+    name = input('Enter a movie title: ')
+    new_movie = merged[merged['title'].str.contains(name)].iloc[0].to_frame().T
+    print('Selected Movie: ',new_movie.title.values[0])
+    def getNeighbors(baseMovie, K):
+        distances = []
+    
+        for index, movie in merged.iterrows():
+            if movie['new_id'] != baseMovie['new_id'].values[0]:
+                dist = Similarity(baseMovie['new_id'].values[0], movie['new_id'])
+                distances.append((movie['new_id'], dist))
+    
+        distances.sort(key=operator.itemgetter(1))
+        neighbors = []
+    
+        for x in range(K):
+            neighbors.append(distances[x])
+        return neighbors
+    
+    K = 10
+    avgRating = 0
+    neighbors = getNeighbors(new_movie, K)
+    print('\nRecommended Movies: \n')
+    for neighbor in neighbors:
+        avgRating = avgRating+merged.iloc[neighbor[0]][2]  
+        print( merged.iloc[neighbor[0]][0]+" | Genres: "+str(merged.iloc[neighbor[0]][1]).strip('[]').replace(' ','')+" | Rating: "+str(merged.iloc[neighbor[0]][2]))
+    
+    print('\n')
+    avgRating = avgRating/K
+    print('The predicted rating for %s is: %f' %(new_movie['original_title'].values[0],avgRating))
+    print('The actual rating for %s is %f' %(new_movie['original_title'].values[0],new_movie['vote_average']))
+
+predict_score()
 ##grafikes parastaseis
 #grafiki parastash Top Eidh tenion
 plt.subplots(figsize=(12,10))
