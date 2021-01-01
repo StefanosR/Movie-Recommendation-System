@@ -18,6 +18,15 @@ ratings = pd.read_csv('ratings.csv', sep=';', names=r_cols, usecols=[1, 2, 3], e
 m_cols = ['movie_id', 'title']
 movies = pd.read_csv('movies.csv', sep='\t', names=m_cols, usecols=[1, 2], encoding="ISO-8859-1", low_memory=False, header=0)
 
+# information about our data
+print(ratings.head(), "\n") # check the head of the data
+print(movies.head(), "\n") # check the head of the data
+print(ratings.describe(), "\n") # rating statistics
+print(movies.describe(), "\n") # movie statistics
+
+# should we merge our datasets?
+# change timestamps to datetime!
+
 # create m*n matrix where m is the number of the users and n the number of the movies,
 # each cell contains the rating of user i for the movie j
 matrix = ratings.pivot(index='user_id', columns='movie_id', values='rating').fillna(0)
@@ -57,4 +66,5 @@ print('You should also watch:\n', movies[['title']].loc[movies['movie_id'] == mo
 # ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Content based filtering
-# Να αντιστοιχίσω τα είδη ταινιών σε αριθμούς και να κάνω knn, συνδυασμός είδη ταινιών με στοιχεία χρηστών όπως επάγγελμα και ταχυδρομικό κώδικα
+# Να αντιστοιχίσω τα είδη ταινιών σε αριθμούς και να κάνω knn
+# Συνδυασμός είδη ταινιών με στοιχεία χρηστών όπως επάγγελμα και ταχυδρομικό κώδικα
