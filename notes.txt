@@ -23,7 +23,7 @@ GENRES:
 17,War
 18,Western
 
-RELEVANCE RELATIONSHIPS: 
+RELEVANCE RELATIONSHIPS: 18x18 = 324 relationships -> to be stored in list
 
 1 -> 1  A        2 -> 1  A        3 -> 1  C
 1 -> 2  A        2 -> 2          3 -> 2
@@ -43,3 +43,8 @@ RELEVANCE RELATIONSHIPS:
 1 -> 16         2 -> 16         3 -> 16
 1 -> 17         2 -> 17         3 -> 17
 1 -> 18         2 -> 18         3 -> 18
+
+How to create the relationships?
+-> Read each unique genre from unique_genres then go to sorted_genres.csv and count how many times it is associated with another movie
+-> For example if >10 adventure movies also have the action genre property then the adventure -> action relationship is created and is a strong one
+-> View personally the sorted_genres list to create the rules of determining when and where a relationship is strong or weak
