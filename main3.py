@@ -75,5 +75,6 @@ df.to_csv("5_unique_genres.csv", index=False)
 # Pandas insert in dataframe -> https://www.geeksforgeeks.org/python-pandas-dataframe-insert/
 # Αρχικά θέτουμε έναν αριθμό σε κάθε είδος και ελέγχουμε το αποτέλεσμα
 
-df.insert(0, 'No.', df.index, allow_duplicates = False)
+df.insert(0, 'No.', df.index + 1, allow_duplicates = False)
+df.to_csv("5_unique_genres.csv", index=False)
 print(df)
