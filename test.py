@@ -71,6 +71,10 @@ ratings_matrix = merged.pivot(index='user_id', columns='movie_id', values='ratin
 gender_matrix = merged.pivot(index='user_id', columns = 'movie_id', values = 'gender').fillna(0)
 
 print(genreList)
-print(merged['genres_bin'].to_list())
 
 
+
+genre_matrix = pd.DataFrame(merged['genres_bin'].to_list(), columns =['Drama', 'Animation', 'Childrens', 'Musical', 'Romance', 'Comedy', 'Action', 'Adventure', 'Fantasy', 'Sci-Fi', 'War', 'Thriller', 'Crime', 'Mystery', 'Western', 'Horror', 'Film-Noir', 'Documentary'])
+genre_matrix.set_index(merged['movie_id'])
+
+print(genre_matrix)
