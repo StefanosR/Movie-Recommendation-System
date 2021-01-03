@@ -5,6 +5,7 @@ import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 
+# comment
 # the next 2 lines (temporary), change the working directory while executing the file, so that VS Code understands csv file names 
 # without needing the full path of the datasets.. Reminder to fix this issue internally (or include full paths) and delete this code 
 
