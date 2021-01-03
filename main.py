@@ -17,7 +17,7 @@ movies = pd.read_csv('movies.csv', sep='\t', names=m_cols, usecols=[1, 2], encod
 # each cell contains the rating of user i for the movie j
 
 matrix = ratings.pivot(index='user_id', columns='movie_id', values='rating').fillna(0)
-
+print(matrix)
 
 # convert dataframe of movie features to scipy sparse matrix for efficiency
 
