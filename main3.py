@@ -5,6 +5,7 @@ from numpy.lib.shape_base import split
 import pandas as pd
 from collections import Counter
 import csv 
+from itertools import combinations
 
 # Task: Content based filtering -> Πρόταση ταινιών βάση του ιστορικού του χρήστη (είδη ταινιών που έχει δει)
 # Να αντιστοιχίσω τα είδη ταινιών σε αριθμούς και να κάνω knn (δλδ συγγενικά είδη θα βρίσκονται κοντά - εαν γίνεται)
@@ -76,15 +77,38 @@ df.to_csv("5_unique_genres.csv", index=False)
 
 # 3. Αντιστοίχιση των ειδών σε αριθμούς και δημιουργία σχέσεων μεταξύ τους
 # Pandas insert in dataframe -> https://www.geeksforgeeks.org/python-pandas-dataframe-insert/
-# Αρχικά θέτουμε έναν αριθμό σε κάθε είδος και ελέγχουμε το αποτέλεσμα
+# Αρχικά θέτουμε έναν αριθμό σε κάθε είδος και ελέγχουμε το αποτέλεσμα αποθηκεύοντας σε csv
 
 df.insert(0, 'No.', df.index + 1, allow_duplicates = False)
 df.to_csv("5_unique_genres.csv", index=False)
 
-# Πρέπει να μεταφέρουμε τις ταινίες από το 3_genres σε ενα dataframe με 6 στηλες
-# Μετά το dataframe το μετατρέπουμε σε λίστα για να μετρήσουμε τις εμφανίσεις των ειδών?
+# Να εξηγήσω τον παρακάτω κώδικα και να δοκιμάσω παραλλαγές από stack overflow
+# Counter is a dictionary -> Counter({('Action', 'Adventure'): 39, ('Action', 'Thriller'): 30, ...})
+   
+counter = Counter()
+unique = set()
+with open('3_genres.csv') as csvfile:
+  next(csvfile)
+  reader = csv.reader(csvfile, delimiter='|')
+  for line in reader:
+    unique.update(line)
+    counter.update(combinations(line, 2))
+counter.update({entry: 0 for entry in combinations(unique, 2)})
+print(counter)
 
-data = list(csv.reader(open("3_genres.csv")))
-print(data)
-      
-#print(Counter(data))
+# Αποθηκεύουμε το counter dict σε pandas dataframe και αφού μετονομάζουμε τις στήλες αποθηκεύουμε σε csv
+occ = pd.DataFrame.from_dict(counter, orient='index').reset_index()
+occ = occ.rename(columns={'index':'Relationship', 0:'Count'})
+occ.to_csv("6_combinations.csv", index=False)
+
+# Δημιουργία νέου dataframe για ταξινόμηση
+occ2 = pd.read_csv('6_combinations.csv')
+
+# Check dataframe (prints different data with each run -> Resolve)
+print("\n",occ2.columns)
+print("\n",occ2.shape)
+print("\n",occ2.abs)
+
+# Δεν δουλεύει το sort -> check parameters
+occ2.sort_values(by=['Count'], axis=0, kind='mergesort', ascending=False)
+occ2.to_csv("7_sorted_combs.csv", index=False)
