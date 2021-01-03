@@ -59,7 +59,7 @@ for index, row in merged.iterrows():
     for genre in genres:
         if genre not in genreList:
             genreList.append(genre)
-genreList[:10] #now we have a list with unique genres
+genreList[:10] 
 
 
 #vazoume ton arithmo 1 otan to genre mias tenias einai idio me thn lista apo to unique genres poy ftiaksame prin kai 0 sta ipolipa
@@ -74,10 +74,58 @@ def binary(genre_list):
     
     return binaryList
 merged['genres_bin'] = merged['genres'].apply(lambda x: binary(x))
+###################################################################################################
+#ftiaxnoyme mia lista me ta monadika eidh age_desc
+ageList = []
+for index, row in merged.iterrows():
+    ages = row["age_desc"]
+    
+    for age in ages:
+        if age not in ageList:
+            ageList.append(age)
+ageList[:10] 
+
+#vazoume ton arithmo 1 otan to age_desc enos user einai idio me thn lista apo to unique age_desc poy ftiaksame prin kai 0 sta ipolipa
+def binary(age_List):
+    binaryList = []
+    
+    for age_ in ageList:
+        if age_ in age_List:
+            binaryList.append(1)
+        else:
+            binaryList.append(0)
+    
+    return binaryList
+merged['ages_bin'] = merged['age_desc'].apply(lambda x: binary(x))
+
 
 
 ratings_matrix = merged.pivot(index='user_id', columns='movie_id', values='rating').fillna(0)
 genre_matrix = pd.DataFrame(merged['genres_bin'].to_list(), columns =['Drama', 'Animation', 'Childrens', 'Musical', 'Romance', 'Comedy', 'Action', 'Adventure', 'Fantasy', 'Sci-Fi', 'War', 'Thriller', 'Crime', 'Mystery', 'Western', 'Horror', 'Film-Noir', 'Documentary'],index=merged.movie_id)
 gender_matrix = pd.DataFrame(merged['gender_bin'].to_list(),index=merged.user_id, columns=['F','M'])
-print(gender_matrix)
+ages_matrix = pd.DataFrame(merged['ages_bin'].to_list(),index=merged.user_id, columns=['Under18', '56+', '25-34', '50-55', '18-24', '45-49', '35-44'])
 
+
+features = csr_matrix(ratings_matrix.values)
+features = csr_matrix(genre_matrix.values)
+features = csr_matrix(gender_matrix.values)
+features = csr_matrix(ages_matrix.values)
+
+knnModel = NearestNeighbors(metric="cosine", algorithm="brute", n_neighbors=10)
+knnModel.fit(features)
+
+distances, indexes = knnModel.kneighbors([ages_matrix.loc[1, :]])
+
+# recommend 5 movies to the user that he has not already seen
+
+users = ages_matrix.reindex(indexes[0] + 1)
+moviesRec = np.sum(users, 0)
+
+for i in range(1, len(moviesRec)):
+    try:
+        if ages_matrix.loc[1, i] != 0:
+            moviesRec[i] = 0
+    except KeyError:
+        print('')
+
+print('You should also watch', merged[['title']].loc[merged['movie_id'] == moviesRec.idxmax()])
