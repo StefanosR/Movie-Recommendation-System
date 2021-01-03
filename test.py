@@ -34,11 +34,20 @@ merged['age_desc'] = merged['age_desc'].str.split(' ')
 #timestamp se hmerominia
 merged['timestamp'] = [time.strftime(' %d-%m-%Y', time.localtime(x)) for x in merged['timestamp']]
 
-merged['gender'] = merged['gender'].map({'F': 1, 'M': 0})# metatropis ton filon apo M k F se 0 kai 1 (male = 0 female = 1)
+#merged['gender'] = merged['gender'].map({'F': 1, 'M': 0})# metatropis ton filon apo M k F se 0 kai 1 (male = 0 female = 1)
 print(merged.tail())
-gendreList = ['M','F'] #lista me ta 2 fila 
-
-
+genderList = ['F','M'] #lista me ta 2 fila 
+def binary(gender_List):
+    binaryList = []
+    
+    for gender in genderList:
+        if gender in gender_List:
+            binaryList.append(1)
+        else:
+            binaryList.append(0)
+    
+    return binaryList
+merged['gender_bin'] = merged['gender'].apply(lambda x: binary(x))
 
 ###################################################################################################
 
@@ -68,13 +77,7 @@ merged['genres_bin'] = merged['genres'].apply(lambda x: binary(x))
 
 
 ratings_matrix = merged.pivot(index='user_id', columns='movie_id', values='rating').fillna(0)
-gender_matrix = merged.pivot(index='user_id', columns = 'movie_id', values = 'gender').fillna(0)
+genre_matrix = pd.DataFrame(merged['genres_bin'].to_list(), columns =['Drama', 'Animation', 'Childrens', 'Musical', 'Romance', 'Comedy', 'Action', 'Adventure', 'Fantasy', 'Sci-Fi', 'War', 'Thriller', 'Crime', 'Mystery', 'Western', 'Horror', 'Film-Noir', 'Documentary'],index=merged.movie_id)
+gender_matrix = pd.DataFrame(merged['gender_bin'].to_list(),index=merged.user_id, columns=['F','M'])
+print(gender_matrix)
 
-print(genreList)
-
-
-
-genre_matrix = pd.DataFrame(merged['genres_bin'].to_list(), columns =['Drama', 'Animation', 'Childrens', 'Musical', 'Romance', 'Comedy', 'Action', 'Adventure', 'Fantasy', 'Sci-Fi', 'War', 'Thriller', 'Crime', 'Mystery', 'Western', 'Horror', 'Film-Noir', 'Documentary'])
-genre_matrix.set_index(merged['movie_id'])
-
-print(genre_matrix)
