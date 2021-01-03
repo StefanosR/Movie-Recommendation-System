@@ -104,7 +104,7 @@ occ.to_csv("6_combinations.csv", index=False)
 # Δημιουργία νέου dataframe για ταξινόμηση
 occ2 = pd.read_csv('6_combinations.csv')
 
-# Check dataframe (prints different data with each run -> Resolve)
+# Error - check dataframe (prints different data with each run -> Resolve)
 print("\n",occ2.columns)
 print("\n",occ2.shape)
 print("\n",occ2.abs)
