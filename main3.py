@@ -1,7 +1,10 @@
+from typing import get_type_hints
 import numpy as np
 from numpy.lib.arraysetops import unique
 from numpy.lib.shape_base import split
 import pandas as pd
+from collections import Counter
+import csv 
 
 # Task: Content based filtering -> Πρόταση ταινιών βάση του ιστορικού του χρήστη (είδη ταινιών που έχει δει)
 # Να αντιστοιχίσω τα είδη ταινιών σε αριθμούς και να κάνω knn (δλδ συγγενικά είδη θα βρίσκονται κοντά - εαν γίνεται)
@@ -50,7 +53,7 @@ real_genres = list(df['genres'].unique())
 sorted_genres = sorted(real_genres)
 
 # Αποθηκεύουμε τα είδη ταινιών (ξεχωριστά μεταξύ τους αλλά όχι μοναδικά) στο df Dataframe και στο sorted_genres csv
-df = pd.DataFrame(sorted_genres, columns=["Sorted Genres:"])
+df = pd.DataFrame(sorted_genres, columns=["Sorted_Genres"])
 df.to_csv("4_sorted_genres.csv", index=False)
 
 # Ορίζουμε το μέγιστο αριθμό στηλών/ειδών που μπορεί να έχει η κάθε ταινία, διαβάζουμε όλες τις γραμές και κρατάμε σε dataframe τα είδη
@@ -77,4 +80,11 @@ df.to_csv("5_unique_genres.csv", index=False)
 
 df.insert(0, 'No.', df.index + 1, allow_duplicates = False)
 df.to_csv("5_unique_genres.csv", index=False)
-print(df)
+
+# Πρέπει να μεταφέρουμε τις ταινίες από το 3_genres σε ενα dataframe με 6 στηλες
+# Μετά το dataframe το μετατρέπουμε σε λίστα για να μετρήσουμε τις εμφανίσεις των ειδών?
+
+data = list(csv.reader(open("3_genres.csv")))
+print(data)
+      
+#print(Counter(data))
