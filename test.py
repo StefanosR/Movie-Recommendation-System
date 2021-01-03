@@ -104,26 +104,26 @@ ratings_matrix = merged.pivot(index='user_id', columns='movie_id', values='ratin
 genre_matrix = pd.DataFrame(merged['genres_bin'].to_list(), columns =['Drama', 'Animation', 'Childrens', 'Musical', 'Romance', 'Comedy', 'Action', 'Adventure', 'Fantasy', 'Sci-Fi', 'War', 'Thriller', 'Crime', 'Mystery', 'Western', 'Horror', 'Film-Noir', 'Documentary'],index=merged.movie_id)
 gender_matrix = pd.DataFrame(merged['gender_bin'].to_list(),index=merged.user_id, columns=['F','M'])
 ages_matrix = pd.DataFrame(merged['ages_bin'].to_list(),index=merged.user_id, columns=['Under18', '56+', '25-34', '50-55', '18-24', '45-49', '35-44'])
-
-
-features = csr_matrix(ratings_matrix.values)
+genre_matrix = genre_matrix[~genre_matrix.index.duplicated()]
+print(genre_matrix)
+#features = csr_matrix(ratings_matrix.values)
 features = csr_matrix(genre_matrix.values)
-features = csr_matrix(gender_matrix.values)
-features = csr_matrix(ages_matrix.values)
+#features = csr_matrix(gender_matrix.values)
+#features = csr_matrix(ages_matrix.values)
 
 knnModel = NearestNeighbors(metric="cosine", algorithm="brute", n_neighbors=10)
 knnModel.fit(features)
 
-distances, indexes = knnModel.kneighbors([ages_matrix.loc[1, :]])
+distances, indexes = knnModel.kneighbors([genre_matrix.loc[1, :]])
 
 # recommend 5 movies to the user that he has not already seen
 
-users = ages_matrix.reindex(indexes[0] + 1)
+users = genre_matrix.reindex(indexes[0] + 1)
 moviesRec = np.sum(users, 0)
 
 for i in range(1, len(moviesRec)):
     try:
-        if ages_matrix.loc[1, i] != 0:
+        if genre_matrix .loc[1, i] != 0:
             moviesRec[i] = 0
     except KeyError:
         print('')
