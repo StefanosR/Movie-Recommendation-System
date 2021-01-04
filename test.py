@@ -23,7 +23,7 @@ movies_info = pd.read_csv('movies.csv', sep='\t', encoding='latin-1',index_col=[
 ##enonoyme ta 3 excel arxeia se 1 pinaka
 test = pd.merge(ratings,movies_info, on='movie_id') #enonoyme tous pinakes ratings kai movies info
 merged = pd.merge(test,users_info, on = 'user_id') #enonoyme ton pinaka me ratings kai movies info me ton users_info
-
+print(merged)
 #vazoume to eidos( h eidh ) kathe tenias se enan pinaka kai ta xorizoyme me ,
 merged['genres'] = merged['genres'].str.strip('[]').str.replace(' ','').str.replace("'",'')
 merged['genres'] = merged['genres'].str.split('|')
@@ -43,7 +43,7 @@ underaged_user_rating=merged.loc[merged['age_desc']=='Under 18']
 
 print(underaged_user_rating)
 
-ratings_matrix = male_user_rating.pivot(index='user_id', columns='movie_id', values='rating').fillna(0)
+ratings_matrix = female_user_rating.pivot(index='user_id', columns='movie_id', values='rating').fillna(0)
 #genre_matrix = pd.DataFrame(merged['genres_bin'].to_list(), columns =['Drama', 'Animation', 'Childrens', 'Musical', 'Romance', 'Comedy', 'Action', 'Adventure', 'Fantasy', 'Sci-Fi', 'War', 'Thriller', 'Crime', 'Mystery', 'Western', 'Horror', 'Film-Noir', 'Documentary'],index=merged.movie_id)
 #gender_matrix = pd.DataFrame(merged['gender_bin'].to_list(),index=merged.user_id, columns=['F','M'])
 #ages_matrix = pd.DataFrame(merged['ages_bin'].to_list(),index=merged.user_id, columns=['Under18', '56+', '25-34', '50-55', '18-24', '45-49', '35-44'])
@@ -57,7 +57,7 @@ features = csr_matrix(ratings_matrix.values)
 knnModel = NearestNeighbors(metric="cosine", algorithm="brute", n_neighbors=10)
 knnModel.fit(features)
 
-distances, indexes = knnModel.kneighbors([ratings_matrix.loc[2, :]])
+distances, indexes = knnModel.kneighbors([ratings_matrix.loc[1, :]])
 
 # recommend 5 movies to the user that he has not already seen
 
@@ -69,6 +69,6 @@ for i in range(1, len(moviesRec)):
         if ratings_matrix.loc[1, i] != 0:
             moviesRec[i] = 0
     except KeyError:
-        print('')
+        pass
 
-print('You should also watch', male_user_rating[['title']].loc[male_user_rating['movie_id'] == moviesRec.idxmax()])
+print('You should also watch', female_user_rating[['title']].loc[female_user_rating['movie_id'] == moviesRec.idxmax()])
