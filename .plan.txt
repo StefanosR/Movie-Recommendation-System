@@ -1,14 +1,14 @@
-CONTENT BASED FILTERING 
+Plan for Content Based Filtering Method: 
 
 STEP1:  Isolate unique genres and unique genre combinations into csv files (and sort them)
-        We need the unique genres for counting and the combinations for determining the relationships
+        We need the unique genres for counting and the combinations for determining the relationships           STATUS: DONE
 
 STEP2:  Count how many times two genres coexist in a row of combinations (in a movie) and determine 
-        how strong their relationship is (zero, low, medium, high, very high)
+        how strong their relationship is (zero, low, medium, high, very high)                                   STATUS: IN PROGRESS
 
 STEP3:  Given a specific movie, view its genre, and search for a non viewed by the user movie that has 
-        a strong genre relationship with the one given. Return the proposed movie
+        a strong genre relationship with the one given. Return the proposed movie                               STATUS: -
 
-STEP4:  Visualize genre relationships and occurencies for statistical purposes
+STEP4:  Visualize genre relationships and occurencies for statistical purposes                                  STATUS: -
 
-STEP5:  Find a combination of the above method and demographics if possible
+STEP5:  Find a combination of the above method and demographics if possible                                     STATUS: -

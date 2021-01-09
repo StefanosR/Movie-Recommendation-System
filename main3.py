@@ -1,4 +1,4 @@
-from typing import get_type_hints
+from typing import get_args, get_type_hints
 import numpy as np
 from numpy.lib.arraysetops import unique
 from numpy.lib.shape_base import split
@@ -6,6 +6,8 @@ import pandas as pd
 from collections import Counter
 import csv 
 from itertools import combinations
+
+#------------------------------Rephrase_Opening_Comments_and_Steps--------------------------------------------
 
 # Task: Content based filtering -> Πρόταση ταινιών βάση του ιστορικού του χρήστη (είδη ταινιών που έχει δει)
 # Να αντιστοιχίσω τα είδη ταινιών σε αριθμούς και να κάνω knn (δλδ συγγενικά είδη θα βρίσκονται κοντά - εαν γίνεται)
@@ -76,19 +78,25 @@ df = pd.DataFrame(unique_genres2, columns=["Unique Genres:"])
 df.to_csv("5_unique_genres.csv", index=False)
 
 # 3. Αντιστοίχιση των ειδών σε αριθμούς και δημιουργία σχέσεων μεταξύ τους
-# Pandas insert in dataframe -> https://www.geeksforgeeks.org/python-pandas-dataframe-insert/
-# Αρχικά θέτουμε έναν αριθμό σε κάθε είδος και ελέγχουμε το αποτέλεσμα αποθηκεύοντας σε csv
 
+# Για την δημιουργία των σχέσεων θα μετρήσουμε πόσες φορές το κάθε είδος μια ταινίας συνυπάρχει με ένα άλλο
+# Όσο μεγαλύτερη η συχνότητα που εμφανίζονται 2 ή περισσότερα είδη μαζί τόσο πιο δυνατή η σχέση τους
+# Επομένως μπορεί να γίνει πρόταση ταινίας με βάση κάποιο δυνατά συσχετισμένο συνδυασμό ειδών με το ιστορικό ταινιών του χρήστη
+
+# Αρχικά θέτουμε έναν αριθμό σε κάθε είδος και ελέγχουμε το αποτέλεσμα αποθηκεύοντας σε csv
 df.insert(0, 'No.', df.index + 1, allow_duplicates = False)
 df.to_csv("5_unique_genres.csv", index=False)
 
-# Να εξηγήσω τον παρακάτω κώδικα και να δοκιμάσω παραλλαγές από stack overflow
-# Counter is a dictionary -> Counter({('Action', 'Adventure'): 39, ('Action', 'Thriller'): 30, ...})
-   
+#--------------------------------IMPLEMENTATION_1----------------------------------------------------------------
+
+'''
+# Περιγραφή μεθόδου: Χρήση της συνάρτησης Counter για να μετρήσει τα unique set από 2 είδη ταινιών (import combinations)
+# Πρόβλημα με αυτό το implementation: Χάνονται κάποιες γραμμές ή και προστίθενται παραπάνω στο 6_combinations.csv
+
 counter = Counter()
 unique = set()
 with open('3_genres.csv') as csvfile:
-  next(csvfile)
+  next(csvfile) # αγνοεί το header 
   reader = csv.reader(csvfile, delimiter='|')
   for line in reader:
     unique.update(line)
@@ -96,19 +104,67 @@ with open('3_genres.csv') as csvfile:
 counter.update({entry: 0 for entry in combinations(unique, 2)})
 print(counter)
 
-# Αποθηκεύουμε το counter dict σε pandas dataframe και αφού μετονομάζουμε τις στήλες αποθηκεύουμε σε csv
-occ = pd.DataFrame.from_dict(counter, orient='index').reset_index()
-occ = occ.rename(columns={'index':'Relationship', 0:'Count'})
-occ.to_csv("6_combinations.csv", index=False)
+# O counter είναι λεξικό -> Counter({('Action', 'Adventure'): 39, ('Action', 'Thriller'): 30, ...})
+# Αποθηκεύουμε τον counter σε pandas dataframe και αφού μετονομάζουμε τις στήλες αποθηκεύουμε σε csv
 
-# Δημιουργία νέου dataframe για ταξινόμηση
-occ2 = pd.read_csv('6_combinations.csv')
+comb = pd.DataFrame.from_dict(counter, orient='index').reset_index()
+comb = comb.rename(columns={'index':'Relationship', 0:'Count'}) 
+comb.to_csv("6_combinations.csv", index=False)
+'''
 
-# Error - check dataframe (prints different data with each run -> Resolve)
-print("\n",occ2.columns)
-print("\n",occ2.shape)
-print("\n",occ2.abs)
+#--------------------------------IMPLEMENTATION_2----------------------------------------------------------------
 
-# Δεν δουλεύει το sort -> check parameters
-occ2.sort_values(by=['Count'], axis=0, kind='mergesort', ascending=False)
-occ2.to_csv("7_sorted_combs.csv", index=False)
+# Νέο pandas dataframe που διαβάζει το csv
+df = pd.read_csv('3_genres.csv')
+
+# Κωδικοποίηση των ειδών σε dummies και αντιστοίχιση της ύπαρξης τους σε στήλες με 0 & 1
+d = df['genres'].str.get_dummies('|')
+
+#    data1  data2  data3  data4  data5  data6  data7
+# 0      1      1      1      0      0      0      0
+# 1      1      1      0      0      0      0      0
+# 2      1      0      0      1      0      1      0
+# 3      0      1      1      0      0      0      0 
+
+# Όπου data1, data2 κλπ είναι τα είδη του dataset και 0-3 τυχαία παραδείγματα από σειρές του 3_genres.csv
+
+# Δημιουργία λεξικού dct για αποθήκευση των δεδομένων που θα παραχθούνε
+dct = {}
+# Όταν δυο είδη συνυπάρχουνε κρατάμε τον συνδυασμό
+for x, y in combinations(d, r=2):
+    dct[f'{x}:{y}'] = d[[x, y]].eq(1).all(1).sum()
+
+# Έλεγχος του αποτελέσματος για τους μοναδικούς συνδυασμούς 
+print(dct, "\n")
+
+# Αποθήκευση του αποτελέσματος στο csv     
+with open('6_combinations.csv', 'w') as csvfile:
+    csvwriter = csv.writer(csvfile)
+    writer = csv.writer(csvfile)
+    writer.writerow(["Combination", "Number"])
+    for row in dct.items():
+        csvwriter.writerow(row)
+ 
+# Αποθήκευση του dictionary με τα αποτελέσματα στο comb dataframe (για να φύγουνε τα empty lines)
+comb = pd.read_csv('6_combinations.csv')
+comb.to_csv('6_combinations.csv', index=False) # Μπορούμε να βάλουμε και indexes -> Should we?       
+
+#--------------------------------Sorting_of_the_Combinations----------------------------------------------------------------
+
+# Ονομασία των στηλών για να χρησιμοποιηθεί ο sort_values 
+comb.columns = ['Combination','Number']
+comb = comb.sort_values(by = ['Number'], kind='quicksort', ascending=False)
+
+# Αποθήκευση και έλεγχος
+comb.to_csv("7_sorted_combs.csv", index=False) # Μπορούμε να βάλουμε και indexes 
+print(comb.head(5))
+
+# Έλεγχος του αθροίσματος των συνδυασμών
+total_combs = comb['Number'].sum()
+print (total_combs)
+
+#--------------------------------Relationship_Strength_Measurement----------------------------------------------------------------
+
+# 4. Μέτρηση των σχέσεων που έχουμε μετρήσει ανάμεσα στα διαφορετικά είδη ταινιών
+
+# -> Watch the videos and read the links first!

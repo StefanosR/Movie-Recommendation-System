@@ -1,222 +1,154 @@
-Relationship,Count
-"('Animation', ""Children's"")",84
-"('Animation', 'Comedy')",25
-"(""Children's"", 'Comedy')",93
-"('Adventure', ""Children's"")",81
-"('Adventure', 'Fantasy')",35
-"(""Children's"", 'Fantasy')",38
-"('Comedy', 'Romance')",204
-"('Comedy', 'Drama')",226
-"('Action', 'Crime')",55
-"('Action', 'Thriller')",133
-"('Crime', 'Thriller')",58
-"('Action', 'Adventure')",128
-"('Adventure', 'Thriller')",31
-"('Drama', 'Romance')",204
-"('Comedy', 'Horror')",41
-"('Action', 'Romance')",35
-"('Adventure', 'Romance')",27
-"('Drama', 'Thriller')",110
-"('Action', 'Comedy')",65
-"('Action', 'Drama')",100
-"('Crime', 'Drama')",90
-"('Drama', 'Sci-Fi')",23
-"('Adventure', 'Sci-Fi')",67
-"(""Children's"", 'Drama')",27
-"('Drama', 'War')",76
-"('Animation', 'Musical')",32
-"('Animation', 'Romance')",4
-"(""Children's"", 'Musical')",37
-"(""Children's"", 'Romance')",7
-"('Musical', 'Romance')",18
-"('Drama', 'Mystery')",32
-"('Sci-Fi', 'Thriller')",70
-"('Action', 'Horror')",25
-"('Comedy', 'Crime')",36
-"('Comedy', 'Thriller')",31
-"('Crime', 'Horror')",6
-"('Horror', 'Thriller')",59
-"('Drama', 'Musical')",15
-"('Crime', 'Romance')",9
-"('Adventure', 'Drama')",33
-"('Adventure', 'Comedy')",44
-"('Adventure', 'Musical')",9
-"('Comedy', 'Musical')",41
-"('Action', 'War')",46
-"('Adventure', 'Crime')",9
-"('Mystery', 'Romance')",12
-"('Romance', 'War')",20
-"('Comedy', 'War')",18
-"('Action', 'Mystery')",12
-"('Action', 'Sci-Fi')",107
-"('Adventure', 'Mystery')",3
-"('Mystery', 'Sci-Fi')",6
-"('Thriller', 'War')",8
-"('Romance', 'Thriller')",33
-"('Crime', 'Film-Noir')",15
-"('Crime', 'Mystery')",13
-"('Film-Noir', 'Mystery')",8
-"('Film-Noir', 'Thriller')",20
-"('Mystery', 'Thriller')",49
-"('Action', ""Children's"")",13
-"('Horror', 'Sci-Fi')",58
-"('Crime', 'Sci-Fi')",6
-"('Drama', 'Fantasy')",9
-"('Fantasy', 'Romance')",7
-"('Fantasy', 'Thriller')",1
-"('Drama', 'Horror')",12
-"('Comedy', 'Sci-Fi')",31
-"('Comedy', 'Fantasy')",19
-"('Action', 'Fantasy')",15
-"('Fantasy', 'Sci-Fi')",13
-"('Drama', 'Western')",13
-"('Romance', 'Western')",3
-"('War', 'Western')",1
-"('Action', 'Western')",10
-"('Adventure', 'Western')",4
-"('Action', 'Musical')",3
-"('Musical', 'Sci-Fi')",2
-"('Crime', 'Fantasy')",1
-"('Comedy', 'Western')",17
-"('Comedy', 'Mystery')",13
-"('Film-Noir', 'Sci-Fi')",2
-"(""Children's"", 'Sci-Fi')",14
-"('Action', 'Animation')",4
-"('Adventure', 'Animation')",14
-"('Animation', 'Fantasy')",6
-"('Adventure', 'Horror')",8
-"('Animation', 'Horror')",1
-"('Animation', 'Sci-Fi')",8
-"('Documentary', 'Drama')",4
-"('Adventure', 'War')",12
-"('Animation', 'Thriller')",4
-"('Sci-Fi', 'War')",11
-"('Romance', 'Sci-Fi')",7
-"('Film-Noir', 'Romance')",1
-"(""Children's"", 'Western')",2
-"(""Children's"", 'Mystery')",2
-"('Drama', 'Film-Noir')",6
-"('Animation', 'War')",2
-"(""Children's"", 'Thriller')",1
-"(""Children's"", 'War')",2
-"('Documentary', 'War')",1
-"('Musical', 'War')",3
-"('Horror', 'Romance')",3
-"('Horror', 'Mystery')",6
-"('Comedy', 'Documentary')",4
-"('Documentary', 'Musical')",2
-"('Fantasy', 'War')",1
-"('Sci-Fi', 'Western')",3
-"('Fantasy', 'Musical')",2
-"(""Children's"", 'Horror')",1
-"('Animation', 'Drama')",1
-"('Thriller', 'Western')",1
-"('Comedy', 'Film-Noir')",1
-"('Horror', 'Musical')",2
-"('Animation', 'Mystery')",1
-"('Adventure', 'Film-Noir')",1
-"('Animation', 'Film-Noir')",1
-"('Film-Noir', 'Horror')",1
-"('Mystery', 'Musical')",0
-"('Mystery', 'Crime')",0
-"('Mystery', ""Children's"")",0
-"('Mystery', 'Documentary')",0
-"('Mystery', 'War')",0
-"('Mystery', 'Fantasy')",0
-"('Mystery', 'Action')",0
-"('Mystery', 'Horror')",0
-"('Mystery', 'Western')",0
-"('Mystery', 'Animation')",0
-"('Mystery', 'Adventure')",0
-"('Mystery', 'Comedy')",0
-"('Mystery', 'Drama')",0
-"('Mystery', 'Film-Noir')",0
-"('Musical', 'Crime')",0
-"('Musical', ""Children's"")",0
-"('Musical', 'Documentary')",0
-"('Musical', 'Fantasy')",0
-"('Musical', 'Action')",0
-"('Musical', 'Thriller')",0
-"('Musical', 'Horror')",0
-"('Musical', 'Western')",0
-"('Musical', 'Animation')",0
-"('Musical', 'Adventure')",0
-"('Musical', 'Comedy')",0
-"('Musical', 'Drama')",0
-"('Musical', 'Film-Noir')",0
-"('Crime', ""Children's"")",0
-"('Crime', 'Documentary')",0
-"('Crime', 'War')",0
-"('Crime', 'Action')",0
-"('Crime', 'Western')",0
-"('Crime', 'Animation')",0
-"('Crime', 'Adventure')",0
-"('Crime', 'Comedy')",0
-"(""Children's"", 'Documentary')",0
-"(""Children's"", 'Action')",0
-"(""Children's"", 'Animation')",0
-"(""Children's"", 'Adventure')",0
-"(""Children's"", 'Film-Noir')",0
-"('Sci-Fi', 'Documentary')",0
-"('Sci-Fi', 'Fantasy')",0
-"('Sci-Fi', 'Action')",0
-"('Sci-Fi', 'Horror')",0
-"('Sci-Fi', 'Animation')",0
-"('Sci-Fi', 'Romance')",0
-"('Sci-Fi', 'Adventure')",0
-"('Sci-Fi', 'Comedy')",0
-"('Sci-Fi', 'Drama')",0
-"('Sci-Fi', 'Film-Noir')",0
-"('Documentary', 'Fantasy')",0
-"('Documentary', 'Action')",0
-"('Documentary', 'Thriller')",0
-"('Documentary', 'Horror')",0
-"('Documentary', 'Western')",0
-"('Documentary', 'Animation')",0
-"('Documentary', 'Romance')",0
-"('Documentary', 'Adventure')",0
-"('Documentary', 'Comedy')",0
-"('Documentary', 'Film-Noir')",0
-"('War', 'Fantasy')",0
-"('War', 'Action')",0
-"('War', 'Thriller')",0
-"('War', 'Horror')",0
-"('War', 'Animation')",0
-"('War', 'Romance')",0
-"('War', 'Adventure')",0
-"('War', 'Comedy')",0
-"('War', 'Drama')",0
-"('War', 'Film-Noir')",0
-"('Fantasy', 'Action')",0
-"('Fantasy', 'Horror')",0
-"('Fantasy', 'Western')",0
-"('Fantasy', 'Animation')",0
-"('Fantasy', 'Adventure')",0
-"('Fantasy', 'Comedy')",0
-"('Fantasy', 'Drama')",0
-"('Fantasy', 'Film-Noir')",0
-"('Action', 'Film-Noir')",0
-"('Thriller', 'Horror')",0
-"('Thriller', 'Animation')",0
-"('Thriller', 'Romance')",0
-"('Thriller', 'Adventure')",0
-"('Thriller', 'Comedy')",0
-"('Thriller', 'Drama')",0
-"('Thriller', 'Film-Noir')",0
-"('Horror', 'Western')",0
-"('Horror', 'Animation')",0
-"('Horror', 'Adventure')",0
-"('Horror', 'Comedy')",0
-"('Horror', 'Drama')",0
-"('Horror', 'Film-Noir')",0
-"('Western', 'Animation')",0
-"('Western', 'Romance')",0
-"('Western', 'Adventure')",0
-"('Western', 'Comedy')",0
-"('Western', 'Drama')",0
-"('Western', 'Film-Noir')",0
-"('Animation', 'Adventure')",0
-"('Romance', 'Adventure')",0
-"('Romance', 'Comedy')",0
-"('Romance', 'Drama')",0
-"('Romance', 'Film-Noir')",0
+Combination,Number
+Comedy:Drama,226
+Drama:Romance,204
+Comedy:Romance,204
+Action:Thriller,133
+Action:Adventure,128
+Drama:Thriller,110
+Action:Sci-Fi,107
+Action:Drama,100
+Children's:Comedy,93
+Crime:Drama,90
+Animation:Children's,84
+Adventure:Children's,81
+Drama:War,76
+Sci-Fi:Thriller,70
+Adventure:Sci-Fi,67
+Action:Comedy,65
+Horror:Thriller,59
+Crime:Thriller,58
+Horror:Sci-Fi,58
+Action:Crime,55
+Mystery:Thriller,49
+Action:War,46
+Adventure:Comedy,44
+Comedy:Musical,41
+Comedy:Horror,41
+Children's:Fantasy,38
+Children's:Musical,37
+Comedy:Crime,36
+Adventure:Fantasy,35
+Action:Romance,35
+Romance:Thriller,33
+Adventure:Drama,33
+Drama:Mystery,32
+Animation:Musical,32
+Adventure:Thriller,31
+Comedy:Thriller,31
+Comedy:Sci-Fi,31
+Children's:Drama,27
+Adventure:Romance,27
+Animation:Comedy,25
+Action:Horror,25
+Drama:Sci-Fi,23
+Film-Noir:Thriller,20
+Romance:War,20
+Comedy:Fantasy,19
+Comedy:War,18
+Musical:Romance,18
+Comedy:Western,17
+Action:Fantasy,15
+Drama:Musical,15
+Crime:Film-Noir,15
+Children's:Sci-Fi,14
+Adventure:Animation,14
+Comedy:Mystery,13
+Drama:Western,13
+Action:Children's,13
+Fantasy:Sci-Fi,13
+Crime:Mystery,13
+Adventure:War,12
+Drama:Horror,12
+Action:Mystery,12
+Mystery:Romance,12
+Sci-Fi:War,11
+Action:Western,10
+Adventure:Crime,9
+Crime:Romance,9
+Drama:Fantasy,9
+Adventure:Musical,9
+Adventure:Horror,8
+Animation:Sci-Fi,8
+Thriller:War,8
+Film-Noir:Mystery,8
+Romance:Sci-Fi,7
+Fantasy:Romance,7
+Children's:Romance,7
+Crime:Sci-Fi,6
+Crime:Horror,6
+Drama:Film-Noir,6
+Horror:Mystery,6
+Animation:Fantasy,6
+Mystery:Sci-Fi,6
+Action:Animation,4
+Animation:Romance,4
+Animation:Thriller,4
+Documentary:Drama,4
+Comedy:Documentary,4
+Adventure:Western,4
+Romance:Western,3
+Sci-Fi:Western,3
+Musical:War,3
+Horror:Romance,3
+Action:Musical,3
+Adventure:Mystery,3
+Musical:Sci-Fi,2
+Animation:War,2
+Fantasy:Musical,2
+Children's:War,2
+Film-Noir:Sci-Fi,2
+Horror:Musical,2
+Children's:Mystery,2
+Children's:Western,2
+Documentary:Musical,2
+Animation:Mystery,1
+Animation:Horror,1
+Fantasy:Thriller,1
+Children's:Horror,1
+Animation:Film-Noir,1
+Animation:Drama,1
+Film-Noir:Romance,1
+Adventure:Film-Noir,1
+Thriller:Western,1
+Film-Noir:Horror,1
+Fantasy:War,1
+Children's:Thriller,1
+War:Western,1
+Crime:Fantasy,1
+Comedy:Film-Noir,1
+Documentary:War,1
+Action:Documentary,0
+Musical:Western,0
+Crime:Western,0
+Documentary:Fantasy,0
+Documentary:Film-Noir,0
+Mystery:War,0
+Mystery:Western,0
+Documentary:Horror,0
+Documentary:Western,0
+Musical:Thriller,0
+Animation:Documentary,0
+Animation:Crime,0
+Documentary:Thriller,0
+Adventure:Documentary,0
+Action:Film-Noir,0
+Documentary:Sci-Fi,0
+Animation:Western,0
+Crime:War,0
+Fantasy:Western,0
+Film-Noir:Western,0
+Fantasy:Mystery,0
+Film-Noir:Musical,0
+Fantasy:Horror,0
+Fantasy:Film-Noir,0
+Documentary:Romance,0
+Film-Noir:War,0
+Crime:Documentary,0
+Children's:Crime,0
+Crime:Musical,0
+Children's:Film-Noir,0
+Children's:Documentary,0
+Horror:War,0
+Horror:Western,0
+Musical:Mystery,0
+Documentary:Mystery,0
