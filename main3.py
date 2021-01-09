@@ -6,6 +6,7 @@ import pandas as pd
 from collections import Counter
 import csv 
 from itertools import combinations
+import sys
 
 #------------------------------Rephrase_Opening_Comments_and_Steps--------------------------------------------
 
@@ -117,6 +118,9 @@ comb.to_csv("6_combinations.csv", index=False)
 # Νέο pandas dataframe που διαβάζει το csv
 df = pd.read_csv('3_genres.csv')
 
+# Check Results
+print(df.head(5))
+
 # Κωδικοποίηση των ειδών σε dummies και αντιστοίχιση της ύπαρξης τους σε στήλες με 0 & 1
 d = df['genres'].str.get_dummies('|')
 
@@ -130,10 +134,13 @@ d = df['genres'].str.get_dummies('|')
 
 # Δημιουργία λεξικού dct για αποθήκευση των δεδομένων που θα παραχθούνε
 dct = {}
-# Όταν δυο είδη συνυπάρχουνε κρατάμε τον συνδυασμό
+# Όταν δυο είδη συνυπάρχουνε κρατάμε τον συνδυασμό # Check την for ότι παίρνει σωστά τα δεδομένα
 for x, y in combinations(d, r=2):
-    dct[f'{x}:{y}'] = d[[x, y]].eq(1).all(1).sum()
-
+    try:
+      dct[f'{x}:{y}'] = d[[x, y]].eq(1).all(1).sum()
+    except KeyError:
+      continue
+    
 # Έλεγχος του αποτελέσματος για τους μοναδικούς συνδυασμούς 
 print(dct, "\n")
 
@@ -167,4 +174,17 @@ print (total_combs)
 
 # 4. Μέτρηση των σχέσεων που έχουμε μετρήσει ανάμεσα στα διαφορετικά είδη ταινιών
 
-# -> Watch the videos and read the links first!
+# Είδη ταξινομήθηκε η λίστα μας, οπότε έχουμε οπτική των πιο δυνατών και πιο αδύναμων σχέσεων
+# Combination Counter overall results: 0-226 max relationships
+
+# Power Levels (Relevance of 2 movie genres)
+# Zero: <10
+# Low: 10-29
+# Medium: 30-64
+# High: 65-100
+# Very High: >100
+
+# To-do:
+# 1. Αντιστοίχηση των Combinations/Relationships σε ένα γράμμα που θα υποδηλώνει power level (for + if)
+# 2. Input από τον χρήστη ιστορικού ταινιών και ανάλυση συνδυασμού ειδών ταινίας που βλέπει συχνότερα
+# 3. Πρόταση του καταλληλότερου συνδυασμού ειδών με βάση τις σχέσεις που έχουμε δημιουργήσει
