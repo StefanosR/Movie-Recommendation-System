@@ -48,7 +48,7 @@ for i in range(0, usersSize[1]):
         vec = users.loc[:, i+1].to_numpy()
         moviesRec[i] = sum(np.multiply(weights, vec))
     except KeyError:
-        print('')
+        pass
 
 indOfMoviesToRecommend = moviesRec.argsort()[-10:][::-1] + 1
 moviesToRecommend = []
