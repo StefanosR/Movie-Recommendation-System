@@ -1,10 +1,10 @@
-import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+import scipy as sc
+import seaborn as sns
 from pandas.core.dtypes.dtypes import str_type
 from pandas.io.parsers import FixedWidthReader
-import scipy as sc
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Inner join movie with ratings dataset -> brings the movies only if they are rated
 movies = pd.read_csv('1_titles.csv', sep=',')
