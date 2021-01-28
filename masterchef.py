@@ -48,6 +48,8 @@ print(prodcount.tail())
 # https://youtu.be/KLkJQUYFSlA
 # https://medium.com/technofunnel/data-categorization-using-scikit-onehotencoder-python-f7686ef43650
 
+# https://docs.google.com/document/d/1SJlskDMNPujvzKN_AnZQwXMwkzn17xTogB0fLBbcAs0/edit#
+
 # a. Ποια είδη βλέπονται πιο πολύ από τους χρήστες (pie chart)
 # b. Ποια είδη βλέπουνε πιο πολύ συγκεκριμένοι χρήστες (ανάλογα με κατηγορία ηλικίας ή φύλο)
 # c. Ποια ταινία είναι πιο δημοφιλής στις τάδες ηλικίες/επαγγέλματα
