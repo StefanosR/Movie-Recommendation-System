@@ -63,10 +63,10 @@ def recommendMovies(user, knnModel, kValue, N):
             predictedRatings[column] = sum(nearestUsers[column]) / nonZero
         else:
             predictedRatings[column] = 0
-    #
-    # for movie in user:
-    #     if movie != 0:
-    #         predictedRatings[movie] = 0
+
+    for movie in user:
+        if movie != 0:
+            predictedRatings[movie] = 0
 
     # find the N movies with the best rating
     res = dict(sorted(predictedRatings.items(), key=itemgetter(1), reverse=True)[:N])
