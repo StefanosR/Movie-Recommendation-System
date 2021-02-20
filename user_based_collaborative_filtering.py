@@ -15,7 +15,7 @@ def trainModel(kValue, train, test):
     featuresTest = csr_matrix(test.values)
 
     # train knn model, using cosine as similarity metric
-    knnModel = NearestNeighbors(metric="cosine", algorithm="brute", n_neighbors=kValue)
+    knnModel = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=kValue)
     knnModel.fit(featuresTrain)
 
     # for each user in the test set do the following:
@@ -23,6 +23,7 @@ def trainModel(kValue, train, test):
     # - predict the ratings for the movies
     # - calculate the RMSE(Root Mean Square Error) between the predicted ratings and the actual ratings
     RMSE = []
+    MAE = []
 
     for index, row in test.iterrows():
         # the indexes returned must be used with iloc not loc
@@ -39,19 +40,31 @@ def trainModel(kValue, train, test):
                 predictedRatings[column] = 0
 
         # calculate the RMSE error only for the movies which the user has already rated
-        rmse = 0
+        # rmse = 0
+        # counter = 0
+        # for column in test:
+        #     if test.loc[index, column] != 0:
+        #         rmse += pow(predictedRatings[column] - test.loc[index, column], 2)
+        #         counter += 1
+        #
+        # RMSE.append(math.sqrt(rmse / counter))
+
+        # calculate the MAE error only for the movies which the user has already rated
+        mae = 0
         counter = 0
         for column in test:
             if test.loc[index, column] != 0:
-                rmse += pow(predictedRatings[column] - test.loc[index, column], 2)
+                mae += abs(predictedRatings[column] - test.loc[index, column])
                 counter += 1
 
-        RMSE.append(math.sqrt(rmse / counter))
+        MAE.append(mae / counter)
 
-    return sum(RMSE) / 604, knnModel
+    # return the MAE and the model trained
+    return sum(MAE) / 604, knnModel
 
 
-def recommendMovies(user, knnModel, kValue, N):
+def recommendMovies(user, knnModel, N):
+    # find the nearest neigbors of user
     distances, indexes = knnModel.kneighbors([user])
     nearestUsers = train.iloc[indexes[0]]
     predictedRatings = {}
@@ -64,22 +77,28 @@ def recommendMovies(user, knnModel, kValue, N):
         else:
             predictedRatings[column] = 0
 
+    # if the user has already seen a movie make the predicted rating 0
+    # so the movie doesn't get recommended to the user (he has already seen it)
     for movie in user:
         if movie != 0:
             predictedRatings[movie] = 0
 
     # find the N movies with the best rating
     res = dict(sorted(predictedRatings.items(), key=itemgetter(1), reverse=True)[:N])
-    return res, predictedRatings, nearestUsers
+    return res
 
 
-def noRatings(newUser, users, kValue, N, matrix):
+def noRatings(newUser, kValue, N):
+    # from user.csv keep only gender and age
     onlyUsers = users[['gender', 'age']]
+    # subtract from every user's age the age of the user that we want to recommend movies
     onlyUsers[:]['age'] = abs(onlyUsers[:]['age'] - newUser['age'])
 
-    knnModel = NearestNeighbors(metric="cosine", algorithm="brute", n_neighbors=kValue)
+    # train knn model, using cosine as similarity metric
+    knnModel = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=kValue)
     knnModel.fit(onlyUsers)
 
+    # find the nearest neigbors of user
     distances, indexes = knnModel.kneighbors(newUser[['gender', 'age']])
     nearestUsers = matrix.iloc[indexes[0]]
     predictedRatings = {}
@@ -122,32 +141,33 @@ matrix = ratings.pivot(index='user_id', columns='movie_id', values='rating').fil
 train, test = train_test_split(matrix, test_size=0.1)
 
 # test the model for different number of nearest neighbors
-rmse1, mdl5 = trainModel(25, train, test)
-rmse2, mdl10 = trainModel(50, train, test)
-rmse3, mdl20 = trainModel(75, train, test)
-rmse4, mdl30 = trainModel(100, train, test)
-rmse5, mdl40 = trainModel(125, train, test)
-rmse6, mdl50 = trainModel(150, train, test)
-rmse7, mdl100 = trainModel(175, train, test)
-rmse8, mdl200 = trainModel(200, train, test)
-rmse9, mdl400 = trainModel(225, train, test)
-rmse10, mdl500 = trainModel(250, train, test)
-rmse11, mdl1000 = trainModel(275, train, test)
-rmse12, mdl2000 = trainModel(300, train, test)
+# rmse1, mdl5 = trainModel(50, train, test)
+# rmse2, mdl10 = trainModel(100, train, test)
+# rmse3, mdl20 = trainModel(150, train, test)
+# rmse4, mdl30 = trainModel(200, train, test)
+# rmse5, mdl40 = trainModel(250, train, test)
+rmse6, mdl50 = trainModel(300, train, test)
+# rmse7, mdl100 = trainModel(350, train, test)
+# rmse8, mdl200 = trainModel(400, train, test)
+# rmse9, mdl400 = trainModel(450, train, test)
+# rmse10, mdl500 = trainModel(500, train, test)
+# rmse11, mdl1000 = trainModel(550, train, test)
+# rmse12, mdl2000 = trainModel(600, train, test)
 
 # plot the RMSEs
-plt.plot([25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300],
-         [rmse1, rmse2, rmse3, rmse4, rmse5, rmse6, rmse7, rmse8, rmse9, rmse10,
-          rmse11, rmse12])
+# plt.plot([50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600],
+#          [rmse1, rmse2, rmse3, rmse4, rmse5, rmse6, rmse7, rmse8, rmse9, rmse10, rmse11, rmse12])
+# plt.plot([50, 600], [rmse1, rmse12])
+
 
 # we choose the number of the nearest neighbors of the model according to the RMSE metric
 # and we recommend for a random user of the test set N movies that he has not already seen
 # and we predict that he is going to enjoy
-bestModel = mdl20
-kValue = 20
+bestModel = mdl50
+kValue = 300
 user = test.iloc[random.randrange(1, 604, 1)]
 N = 10
-moviesID, pr, nu = recommendMovies(user, bestModel, kValue, N)
+moviesID = recommendMovies(user, bestModel, N)
 
 recMovies = []
 for ident in moviesID:
@@ -157,11 +177,11 @@ for movie in recMovies:
     print(movie)
 
 print('*********')
-# for a new user that has not rated any movies, we use his age and gender to find
-# other similar users and recommend him some movies to get him started
-# (tha dataset did not have users of this kind, se we created one)
+# # for a new user that has not rated any movies, we use his age and gender to find
+# # other similar users and recommend him some movies to get him started
+# # (tha dataset did not have users of this kind, se we created one)
 newUser = pd.DataFrame({'user_id': [6041], 'gender': ['0'], 'age': [23]})
-mID = noRatings(newUser, users, kValue, N, matrix)
+mID = noRatings(newUser, kValue, N)
 
 recMovies2 = []
 for ident in mID:
