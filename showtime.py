@@ -66,8 +66,12 @@ plt.show()
 # Smart console comment
 print('\nBeep boop :) \nI am loading data...')
 
-# Make pd df of the correct movies dataset (1_titles.csv = fixed movies)
-movies = pd.read_csv('1_titles.csv', sep=',')
+# We create a movies dataframe and then remove the 1st column of the original dataset (which is unecessary)
+movies_header = ['movie_id', 'title', 'genres']
+movies = pd.read_csv('movies.csv', sep='\t', names=movies_header, usecols=[1, 2, 3], encoding="ISO-8859-1", low_memory=False, header=0)
+
+# After we save the new dataframe to the fixed csv we re-read the file in order to get our dataframe with the new delimiter and correct columns
+movies.to_csv("fixed_movies.csv", index=None)
 
 # Inner join movie with ratings dataset -> brings the movies along only if they are rated
 movies_rating = (ratings.set_index("movie_id").join(movies.set_index("movie_id"), how="left"))
