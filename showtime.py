@@ -144,7 +144,11 @@ print('\n')
 # Sum the columns of the top 5 genres to find number of total ratings for each
 # Equals the sum of all ratings of a genre for all the given years
 sum_column = genre_groups.sum(axis=0)
-print("\n", sum_column)
+print(sum_column, "\n")
+
+# data = {'genres':['Others'], 'Ratings':[10000]}
+# others = pd.DataFrame(data)
+# sum_column = pd.concat([sum_column,others], ignore_index=True)
 
 # Data to plot
 labels = top5_genre # Top 5 genres we found before
@@ -157,8 +161,10 @@ explode = (0.1, 0, 0, 0, 0)  # explode 1st slice
 plt.pie(sizes, explode=explode, labels=labels, colors=colors,
 autopct='%1.1f%%', shadow=True, startangle=140)
 
+plt.title('Genre Popularity (Pie Chart)')
 plt.axis('equal')
 plt.show()
+
 #-------------- Console Output: Top Rated Action Movies per Decade ----------------------------------------------
 
 # Initialize cols and filter the results for before 2000
