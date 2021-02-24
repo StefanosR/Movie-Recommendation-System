@@ -28,23 +28,79 @@ merged = pd.merge(movie_ratings, users_info)
 merged['timestamp'] = [time.strftime('%Y', time.localtime(x)) for x in merged['timestamp']]
 # %d-%m-
 
+
 ##average rating diference between genders
-pivoted = merged.pivot_table(index=['movie_id', 'title'],
+pivoted = merged.pivot_table(index=['genres'],
                            columns=['gender'],
                            values='rating',
                            fill_value=0)
 
-pivoted['diff'] = pivoted.M - pivoted.F
 
-pivoted.reset_index('movie_id', inplace=True)
-disagreements = pivoted[ (pivoted.movie_id > 50 ) & (pivoted.movie_id <= 100)]['diff']
-disagreements.sort_values().plot(kind='barh', figsize=[9, 15])
-plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by Men)')
-plt.ylabel('Title')
-plt.xlabel('Average Rating Difference');
+dic1 = {} #dic1 = dictionary for women
+count1 = {} #counter for owmen
+dic2 = {} #dic2 = dictionary for men
+count2 = {} #counter for men
+for genre in pivoted.iterrows():
+   if genre[0] not in dic1:
+      dic1[genre[0]] = genre[1][0]
+      count1[genre[0]] = 1
+   else:
+      dic1[genre[0]] += genre[1][0]
+      count1[genre[0]] += 1
 
+   if genre[0] not in dic2:
+      dic2[genre[0]] = genre[1][1]
+      count2[genre[0]] = 1
+   else:
+      dic2[genre[0]] += genre[1][1]
+      count2[genre[0]] += 1
+
+for genre in dic1:
+   dic1[genre] = dic1[genre]/count1[genre]
+
+for genre in dic2:
+   dic2[genre] = dic2[genre]/count2[genre]
+
+
+dic3 = {} #dic3 = dictionary of diference female - male
+
+for genre in dic1:
+   if genre in dic2:
+      dic3[genre] = dic1[genre] - dic2[genre]
+   else:
+      dic3[genre] = dic1[genre] - 0
+
+lists = sorted(dic3.items()) # sorted by key, return a list of tuples
+
+x, y = zip(*lists) # unpack a list of pairs into two tuples
+
+
+plt.barh(x[0:49],y[0:49])
+plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by women)')
 
 plt.show()
+##
+plt.barh(x[50:100],y[50:100])
+plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by women)')
+plt.show()
+##
+plt.barh(x[101:151],y[101:151])
+plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by women)')
+plt.show()
+##
+plt.barh(x[152:202],y[152:202])
+plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by women)')
+plt.show()
+##
+plt.barh(x[203:253],y[203:253])
+plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by women)')
+plt.show()
+##
+plt.barh(x[254:301],y[254:301])
+plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by women)')
+plt.show()
+
+
 ##find popular movie depending on age desc
 
 by_age = merged.pivot_table(index=['movie_id', 'title'],
@@ -56,6 +112,17 @@ age_df = (merged.groupby(['age_desc','title'])['rating'].size().sort_values(asce
    .reset_index(name='counts') 
    .drop_duplicates(subset='age_desc'))
 print(age_df)
+# Pie chart, where the slices will be ordered and plotted counter-clockwise:
+labels = age_df['age_desc']
+sizes =  age_df['counts']
+
+
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes,  labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+plt.show()
 
 maxValues_age = by_age.max() 
 maxValueIndex_age = by_age.idxmax()
