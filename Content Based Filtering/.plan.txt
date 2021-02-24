@@ -1,0 +1,55 @@
+Plan for Content Based Filtering Method: 
+
+STEP1:  Isolate unique genres and unique genre combinations into csv files (and sort them)
+        We need the unique genres for counting and the combinations for determining the relationships           STATUS: DONE
+
+STEP2:  Count how many times two genres coexist in a row of combinations (in a movie) and determine 
+        how strong their relationship is (zero, low, medium, high, very high)                                   STATUS: DONE
+
+STEP3:  Given a specific movie, view its genre, and search for a non viewed by the user movie that has 
+        a strong genre relationship with the one given. Return the proposed movie                               STATUS: IN PROGRESS
+
+STEP4:  Visualize genre relationships and occurencies for statistical purposes                                  STATUS: IN PROGRESS
+
+STEP5:  Find a combination of the above method and demographics if possible                                     STATUS: DROPPED
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+POWER LEVELS: A, B, C, D, Z (very high, high, medium, low, zero relevance)
+
+GENRES:
+
+1,Action
+2,Adventure
+3,Animation
+4,Children's
+5,Comedy
+6,Crime
+7,Documentary
+8,Drama
+9,Fantasy
+10,Film-Noir
+11,Horror
+12,Musical
+13,Mystery
+14,Romance
+15,Sci-Fi
+16,Thriller
+17,War
+18,Western
+
+RELEVANCE RELATIONSHIPS: 18x18 = 324 relationships (max) -> to be stored in csv
+
+1 -> 1  A        2 -> 1  A        3 -> 1  C
+1 -> 2  A        2 -> 2          3 -> 2
+1 -> 3  D        2 -> 3          3 -> 3 
+1 -> 4          2 -> 4          3 -> 4  A
+1 -> 5          2 -> 5          3 -> 5
+1 -> 6          2 -> 6          3 -> 6
+1 -> 7          2 -> 7          3 -> 7
+...             ...             ...
+
+How to create the relationships?
+-> Read each unique genre from unique_genres then go to sorted_genres.csv and count how many times it is associated with another movie
+-> For example if >10 adventure movies also have the action genre property then the adventure -> action relationship is created and is a strong one
+-> View personally the sorted_genres list to create the rules of determining when and where a relationship is strong or weak
