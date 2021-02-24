@@ -3,22 +3,21 @@
 Ο σκοπός αυτής της άσκησης είναι η δημιουργία ενός συστήματος που να προτείνει ταινίες στους χρήστες σύμφωνα με τις ταινίες που έχουν
 παρακολουθήσει και τις αξιολογήσεις που έχουν κάνει. Επιπλέον γίνεται ανάλυση δεδομένων από την οποία θα προκύψει κατηγοριοποίηση και οπτικοποίηση αυτών.
 
-
-
-
-Αρχικά Datasets:
+Αρχικά Datasets: users.csv, movies.csv, ratings.csv
 
 Περιγραφή αρχείων:
 
-main -> 
-test -> 
+user_based_filtering ->
+demographics -> 
 showtime -> Data Analysis, οπτικοποίηση δεδομένων και στατιστικά
 
-unified ->
+Νέα αρχεία: 
+
 fixed_ratings ->
 fixed_users ->
+fixed_movies -> 
 
-Απαραίτητες Βιβλιοθήκες: (shotime, content based filtering)
+Απαραίτητες Βιβλιοθήκες: (showtime, content-based filtering)
 
 sys
 warnings
