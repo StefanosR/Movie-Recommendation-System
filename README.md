@@ -37,8 +37,8 @@ itertools, combinations
 
 Προτεινόμενη σειρά εκτέλεσης: 
 
-1.
-2.
+1. user-based colabborative filtering
+2. 
 3.
 4.
 5.

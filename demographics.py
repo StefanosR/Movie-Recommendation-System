@@ -26,13 +26,11 @@ merged = pd.merge(movie_ratings, users_info)
 merged['timestamp'] = [time.strftime('%Y', time.localtime(x)) for x in merged['timestamp']]
 # %d-%m-
 
-
-##difference in female/male preferences on movie genres
+## difference in female/male preferences on movie genres
 pivoted = merged.pivot_table(index=['genres'],
                            columns=['gender'],
                            values='rating',
                            fill_value=0)
-
 
 dic1 = {} #dic1 = dictionary for women
 count1 = {} #counter for owmen
@@ -58,7 +56,6 @@ for genre in dic1:
 
 for genre in dic2:
    dic2[genre] = dic2[genre]/count2[genre]
-
 
 dic3 = {} #dic3 = dictionary of diference female - male
 
@@ -98,7 +95,6 @@ plt.barh(x[254:301],y[254:301])
 plt.title('Male vs. Female Avg. Ratings\n(Difference > 0 = Favored by women)')
 plt.show()
 
-
 ##find popular movie depending on age desc
 
 by_age = merged.pivot_table(index=['movie_id', 'title'],
@@ -113,7 +109,6 @@ print(age_df)
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
 labels = age_df['age_desc']
 sizes =  age_df['counts']
-
 
 fig1, ax1 = plt.subplots()
 ax1.pie(sizes,  labels=labels, autopct='%1.1f%%',

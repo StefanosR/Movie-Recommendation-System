@@ -49,7 +49,7 @@ RELEVANCE RELATIONSHIPS: 18x18 = 324 relationships (max) -> to be stored in csv
 1 -> 7          2 -> 7          3 -> 7
 ...             ...             ...
 
-How to create the relationships?
--> Read each unique genre from unique_genres then go to sorted_genres.csv and count how many times it is associated with another movie
--> For example if >10 adventure movies also have the action genre property then the adventure -> action relationship is created and is a strong one
--> View personally the sorted_genres list to create the rules of determining when and where a relationship is strong or weak
+# To-do:
+# 1. Αντιστοίχηση των Combinations/Relationships σε ένα γράμμα που θα υποδηλώνει power level (for + if)
+# 2. Input από τον χρήστη ιστορικού ταινιών και ανάλυση συνδυασμού ειδών ταινίας που βλέπει συχνότερα
+# 3. Πρόταση του καταλληλότερου συνδυασμού ειδών με βάση τις σχέσεις που έχουμε δημιουργήσει
