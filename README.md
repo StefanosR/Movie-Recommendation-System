@@ -5,41 +5,38 @@
 
 Αρχικά Datasets: users.csv, movies.csv, ratings.csv
 
-Περιγραφή αρχείων:
+Τα νέα αρχεία dataset fixed_ratings, fixed_users, fixed_movies κατασκευάστηκαν για την εξυπηρέτηση της ανάλυσης δεδομένων που γίνεται στο showtime.py
 
-user_based_filtering ->
-demographics -> 
-showtime -> Data Analysis, οπτικοποίηση δεδομένων και στατιστικά
+Περιγραφή αρχείων του Project:
 
-Νέα αρχεία: 
+user_based_collaborative_filtering -> σύστημα πρότασης ταινιών (2 σεναρίων)
+demographics -> επεξεργασία δεδομένων των datasets για εξαγωγή πληροφοριών
+showtime -> ανάλυση δεδομένων για οπτικοποίηση δεδομένων και παραγωγή στατιστικών
 
-fixed_ratings ->
-fixed_users ->
-fixed_movies -> 
+Προτεινόμενη σειρά εκτέλεσης: 
 
-Απαραίτητες Βιβλιοθήκες: (showtime, content-based filtering)
+1. user_based_colabborative_filtering
+2. demographics
+3. showtime
+
+Υπάρχει εκτενής σχολιασμός σε όλα τα αρχεία κώδικα. 
+
+Βιβλιοθήκες που χρησιμοποιούνται στο Project:
 
 sys
+csv
+random
 warnings
 pandas 
 numpy 
 pandas.io.parsers, FixedWidthReader
-scipy 
+scipy, csr_matrix
 matplotlib.pyplot
 seaborn
 numpy.lib.arraysetops, unique
 numpy.lib.shape_base, split
 collections, Counter
-csv 
+operator, itemgetter
 itertools, combinations
-
-
-Προτεινόμενη σειρά εκτέλεσης: 
-
-1. user-based colabborative filtering
-2. 
-3.
-4.
-5.
-
-Υπάρχει εκτενής σχολιασμός σε όλα τα αρχεία κώδικα. 
+sklearn.neighbors, NearestNeighbors
+sklearn.model_selection, train_test_split

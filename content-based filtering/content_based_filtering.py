@@ -25,31 +25,31 @@ titles = pd.read_csv('movies.csv', sep='\t', names=titles_header, usecols=[1, 2,
 # print(titles.head(), "\n")
 
 # Αποθήκευση σε csv 
-titles.to_csv("Content Based Filtering/1_titles.csv", index=None)
+titles.to_csv("content-based filtering/1_titles.csv", index=None)
 
 # Δημιουργία νέου dataframe ids που περιέχει μόνο τα movie id των ταινιών και τα είδη που τους αντιστοιχούν
 ids_header = ["movie id", "genres"]
-ids = pd.read_csv("Content Based Filtering/1_titles.csv",  sep=',', names=ids_header, usecols=[0, 2], encoding="ISO-8859-1", low_memory=False, header=0)
+ids = pd.read_csv("content-based filtering/1_titles.csv",  sep=',', names=ids_header, usecols=[0, 2], encoding="ISO-8859-1", low_memory=False, header=0)
 
 # Έλεγχος δεδομένων
 # print(ids.head())
 
 # Αποθήκευση σε csv 
-ids.to_csv("Content Based Filtering/2_ids.csv", index=None)
+ids.to_csv("content-based filtering/2_ids.csv", index=None)
 
 # 2. Δημιουργία του dataframe genres που περιέχει μόνο τα είδη των ταινιών του αρχικού dataset 
 # προκειμένου να φιλτραριστούνε και να χρησιμοποιηθούνε τα συγκεκριμένα δεδομένα. Συν τα CSV files με διαφορετικά δεδομένα
 genres_header = ["genres"]
-genres = pd.read_csv("Content Based Filtering/2_ids.csv", sep=',', names=genres_header, usecols=[1], encoding="ISO-8859-1", low_memory=False, header=0)
+genres = pd.read_csv("content-based filtering/2_ids.csv", sep=',', names=genres_header, usecols=[1], encoding="ISO-8859-1", low_memory=False, header=0)
 
 # Έλεγχος δεδομένων
 # print(genres.head())
 
 # Αποθήκευση σε csv 
-genres.to_csv("Content Based Filtering/3_genres.csv", index=None)
+genres.to_csv("content-based filtering/3_genres.csv", index=None)
 
 # Παίρνουμε τα είδη από το genres και φτιάχνουμε λίστα με όλα τα είδη ταινιών
-df = pd.read_csv('Content Based Filtering/3_genres.csv')
+df = pd.read_csv('content-based filtering/3_genres.csv')
 list(set(df.genres))
 
 # Με τις συναρτήσεις unique & sorted αφαιρούμε όλες τις επαναλήψεις ειδών και ταξινομούμε αλφαβητικά τη λίστα μας
@@ -58,11 +58,11 @@ sorted_genres = sorted(real_genres)
 
 # Αποθηκεύουμε τα είδη ταινιών (ξεχωριστά μεταξύ τους αλλά όχι μοναδικά) στο df Dataframe και στο sorted_genres csv
 df = pd.DataFrame(sorted_genres, columns=["Sorted_Genres"])
-df.to_csv("Content Based Filtering/4_sorted_genres.csv", index=False)
+df.to_csv("content-based filtering/4_sorted_genres.csv", index=False)
 
 # Ορίζουμε το μέγιστο αριθμό στηλών/ειδών που μπορεί να έχει η κάθε ταινία, διαβάζουμε όλες τις γραμές και κρατάμε σε dataframe τα είδη
 columns=["col1", "col2", "col3", "col4", "col5", "col6"]
-unique_genres = pd.read_csv("Content Based Filtering/4_sorted_genres.csv",  sep='|', skiprows=[0], names=columns, encoding="ISO-8859-1", low_memory=False, header=None)
+unique_genres = pd.read_csv("content-based filtering/4_sorted_genres.csv",  sep='|', skiprows=[0], names=columns, encoding="ISO-8859-1", low_memory=False, header=None)
 
 # Έλεγχος του πίνακα με τα είδη ανά ταινία
 # print(unique_genres.head())
@@ -76,7 +76,7 @@ unique_genres2 = list(unique_genres['col1'].unique())
 
 # Μεταφέρουμε τη νέα λίστα μας στο df (ή σε df2 αν θέλουμε) και αποθηκεύουμε σε csv
 df = pd.DataFrame(unique_genres2, columns=["Unique Genres:"])
-df.to_csv("Content Based Filtering/5_unique_genres.csv", index=False)
+df.to_csv("content-based filtering/5_unique_genres.csv", index=False)
 
 # 3. Αντιστοίχιση των ειδών σε αριθμούς και δημιουργία σχέσεων μεταξύ τους
 
@@ -86,7 +86,7 @@ df.to_csv("Content Based Filtering/5_unique_genres.csv", index=False)
 
 # Αρχικά θέτουμε έναν αριθμό σε κάθε είδος και ελέγχουμε το αποτέλεσμα αποθηκεύοντας σε csv
 df.insert(0, 'No.', df.index + 1, allow_duplicates = False)
-df.to_csv("Content Based Filtering/5_unique_genres.csv", index=False)
+df.to_csv("content-based filtering/5_unique_genres.csv", index=False)
 
 #--------------------------------IMPLEMENTATION_1----------------------------------------------------------------
 
@@ -110,13 +110,13 @@ print(counter)
 
 comb = pd.DataFrame.from_dict(counter, orient='index').reset_index()
 comb = comb.rename(columns={'index':'Relationship', 0:'Count'}) 
-comb.to_csv("Content Based Filtering/6_combinations.csv", index=False)
+comb.to_csv("content-based filtering/6_combinations.csv", index=False)
 '''
 
 #--------------------------------IMPLEMENTATION_2----------------------------------------------------------------
 
 # Νέο pandas dataframe που διαβάζει το csv
-df = pd.read_csv('Content Based Filtering/3_genres.csv')
+df = pd.read_csv('content-based filtering/3_genres.csv')
 
 # Check Results
 print(df.head(5))
@@ -145,7 +145,7 @@ for x, y in combinations(d, r=2):
 print(dct, "\n")
 
 # Αποθήκευση του αποτελέσματος στο csv     
-with open('Content Based Filtering/6_combinations.csv', 'w') as csvfile:
+with open('content-based filtering/6_combinations.csv', 'w') as csvfile:
     csvwriter = csv.writer(csvfile)
     writer = csv.writer(csvfile)
     writer.writerow(["Combination", "Number"])
@@ -153,8 +153,8 @@ with open('Content Based Filtering/6_combinations.csv', 'w') as csvfile:
         csvwriter.writerow(row)
  
 # Αποθήκευση του dictionary με τα αποτελέσματα στο comb dataframe (για να φύγουνε τα empty lines)
-comb = pd.read_csv('Content Based Filtering/6_combinations.csv')
-comb.to_csv('Content Based Filtering/6_combinations.csv', index=False) # Μπορούμε να βάλουμε και indexes -> Should we?       
+comb = pd.read_csv('content-based filtering/6_combinations.csv')
+comb.to_csv('content-based filtering/6_combinations.csv', index=False) # Μπορούμε να βάλουμε και indexes -> Should we?       
 
 #--------------------------------Sorting_of_the_Combinations----------------------------------------------------------------
 
@@ -163,7 +163,7 @@ comb.columns = ['Combination','Number']
 comb = comb.sort_values(by = ['Number'], kind='quicksort', ascending=False)
 
 # Αποθήκευση και έλεγχος
-comb.to_csv("Content Based Filtering/7_sorted_combs.csv", index=False) # Μπορούμε να βάλουμε και indexes 
+comb.to_csv("content-based filtering/7_sorted_combs.csv", index=False) # Μπορούμε να βάλουμε και indexes 
 print(comb.head(5))
 
 # Έλεγχος του αθροίσματος των συνδυασμών

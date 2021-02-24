@@ -7,8 +7,6 @@ import math
 import matplotlib.pyplot as plt
 from operator import itemgetter
 import random
-# 24/02
-
 
 def trainModel(kValue, train, test):
     # convert dataframe of movie features to scipy sparse matrix for efficiency
@@ -169,7 +167,7 @@ for movie in recMovies:
 print('*********')
 # # for a new user that has not rated any movies, we use his age and gender to find
 # # other similar users and recommend him some movies to get him started
-# # (tha dataset did not have users of this kind, se we created one)
+# # (the dataset did not have users of this kind, se we created one)
 newUser = pd.DataFrame({'user_id': [6041], 'gender': ['0'], 'age': [23]})
 mID = noRatings(newUser, kValue, N)
 

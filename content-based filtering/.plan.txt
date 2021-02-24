@@ -7,15 +7,20 @@ STEP2:  Count how many times two genres coexist in a row of combinations (in a m
         how strong their relationship is (zero, low, medium, high, very high)                                   STATUS: DONE
 
 STEP3:  Given a specific movie, view its genre, and search for a non viewed by the user movie that has 
-        a strong genre relationship with the one given. Return the proposed movie                               STATUS: IN PROGRESS
+        a strong genre relationship with the one given. Return the proposed movie                               STATUS: DROPPED
 
 STEP4:  Visualize genre relationships and occurencies for statistical purposes                                  STATUS: IN PROGRESS
 
 STEP5:  Find a combination of the above method and demographics if possible                                     STATUS: DROPPED
 
 ----------------------------------------------------------------------------------------------------------------------------------------
+POWER LEVELS (Relevance of 2 movie genres) -> list = ['V','H','M','L','Z']
 
-POWER LEVELS: A, B, C, D, Z (very high, high, medium, low, zero relevance)
+Zero: <10
+Low: 10-29
+Medium: 30-64
+High: 65-100
+Very High: >100
 
 GENRES:
 
