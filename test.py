@@ -3,11 +3,9 @@ import json
 from datetime import datetime 
 import time
 from scipy import spatial
-from scipy.sparse import csr_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from sklearn.neighbors import NearestNeighbors
 import operator
 
 ##import excel with ratings
@@ -29,7 +27,7 @@ merged['timestamp'] = [time.strftime('%Y', time.localtime(x)) for x in merged['t
 # %d-%m-
 
 
-##average rating diference between genders
+##difference in female/male preferences on movie genres
 pivoted = merged.pivot_table(index=['genres'],
                            columns=['gender'],
                            values='rating',
